@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Panel - Venue Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .navbar {
+            background-color: #2C3E50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .navbar a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 20px;
+        }
+        .container {
+            padding: 30px;
+            max-width: 1100px;
+            margin: auto;
+        }
+        h3 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background-color: #34495E;
+            color: white;
+            padding: 10px;
+        }
+        td {
+            padding: 10px;
+            background: white;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        .btn-warning {
+            background: #f0ad4e;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .btn-warning:hover {
+            background: #ec971f;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <a href="/">VenueBooking</a>
+    <div>
+        <a href="/">User Panel</a>
+        <a href="/admin">Admin Panel</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h3>Admin Panel: Manage Venues</h3>
+    <form th:action="@{/add}" method="post">
+        <input type="text" name="name" placeholder="Venue Name" required>
+        <input type="text" name="location" placeholder="Location" required>
+        <input type="number" name="capacity" placeholder="Capacity" required>
+        <input type="text" name="imageUrl" placeholder="Image URL">
+        <button type="submit">Add Venue</button>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Capacity</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="venue : ${venues}">
+            <td th:text="${venue.id}">1</td>
+            <td th:text="${venue.name}">Sample Venue</td>
+            <td th:text="${venue.location}">Mumbai</td>
+            <td th:text="${venue.capacity}">200</td>
+            <td>
+                <a th:href="@{'/block/' + ${venue.id}}" class="btn-warning">Block Dates</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

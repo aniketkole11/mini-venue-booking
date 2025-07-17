@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Venue Booking - User Panel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f4f6f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background-color: #2C3E50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            color: #1abc9c;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1300px;
+            margin: 40px auto;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #2C3E50;
+            margin-bottom: 30px;
+        }
+
+        .alert {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .venue-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: start;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 280px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+            
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2C3E50;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+       
+    .form-date {
+        display: block;
+        margin: 10px auto;
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        width: 90%;
+    }
+
+    .btn-book {
+        display: block;
+        background-color: #3498DB;
+        border: none;
+        color: white;
+        padding: 10px;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+        width: 98%;
+    }
+
+    .btn-book:hover {
+        background-color: #2980B9;
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/">VenueBooking</a>
+    <a href="/admin">Admin Panel</a>
+</nav>
+
+<div class="container">
+    <h3 class="title">Book Your Venue</h3>
+
+    <div th:if="${message}" class="alert" th:text="${message}"></div>
+
+    <div class="venue-grid">
+        <div th:each="venue : ${venues}" class="card">
+            <img th:src="${venue.imageUrl}" alt="Venue Image">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${venue.name}">Venue Name</h5>
+                <p class="card-text">
+                    Location: <span th:text="${venue.location}"></span><br>
+                    Capacity: <span th:text="${venue.capacity}"></span>
+                </p>
+                <form th:action="@{'/book/' + ${venue.id}}" method="post">
+                    <input type="date" name="date" class="form-date" required>
+                    <button type="submit" class="btn-book">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

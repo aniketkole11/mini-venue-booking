@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Block Dates</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            background-color: #2C3E50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .navbar a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 40px 20px;
+            background: white;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h3, h5 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        input[type="date"] {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e67e22;
+        }
+        .form-check {
+            margin: 5px 0;
+        }
+        .form-check-input {
+            margin-right: 8px;
+        }
+        .form-check-label {
+            font-size: 15px;
+        }
+        
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <a class="navbar-brand" href="/">VenueBooking</a>
+    <div>
+        <a href="/">User Panel</a>
+        <a href="/admin">Admin Panel</a>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container">
+
+    <h3 th:text="'Block Dates for ' + ${venue.name}">Block Dates</h3>
+
+    <!-- Block New Date -->
+    <form th:action="@{'/block-date/' + ${venue.id}}" method="post">
+        <div class="row">
+            <input type="date" name="date" required>
+            <button type="submit">Block Date</button>
+        </div>
+    </form>
+
+    <!-- Unblock Dates -->
+    <form th:action="@{'/unblock-date/' + ${venue.id}}" method="post">
+        <h5>Currently Blocked Dates</h5>
+        <div>
+            <div class="form-check" th:each="date : ${venue.blockedDates}">
+                <input class="form-check-input" type="checkbox" th:name="unblockDates"
+                       th:id="${date}" th:value="${date}">
+                <label class="form-check-label" th:for="${date}" th:text="${date}"></label>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:15px;">
+            <button type="submit" style="background-color:#c0392b;">Unblock Selected Dates</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
